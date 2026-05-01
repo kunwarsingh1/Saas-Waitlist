@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AttendEase | Biometric Attendance for Field Sales</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#75777e",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#f0f1f2",
+                        "tertiary": "#000613",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#006b5c",
+                        "on-surface": "#191c1d",
+                        "secondary-fixed-dim": "#41ddc2",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#d9dadb",
+                        "surface": "#f8f9fa",
+                        "background": "#f8f9fa",
+                        "on-tertiary-fixed-variant": "#3c475a",
+                        "on-primary-fixed": "#071c36",
+                        "on-surface-variant": "#44474d",
+                        "surface-container-low": "#f3f4f5",
+                        "on-background": "#191c1d",
+                        "on-tertiary-fixed": "#111c2c",
+                        "primary-fixed": "#d6e3ff",
+                        "surface-container-high": "#e7e8e9",
+                        "inverse-primary": "#b5c7ea",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e1e3e4",
+                        "secondary-fixed": "#65fade",
+                        "outline-variant": "#c4c6ce",
+                        "primary-fixed-dim": "#b5c7ea",
+                        "on-secondary-fixed-variant": "#005045",
+                        "on-tertiary-container": "#7c879c",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#141f30",
+                        "on-secondary-fixed": "#00201b",
+                        "tertiary-fixed": "#d8e3fa",
+                        "secondary-container": "#65fade",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#4d5f7d",
+                        "on-primary-container": "#7587a7",
+                        "surface-container": "#edeeef",
+                        "on-secondary-container": "#007262",
+                        "on-primary-fixed-variant": "#364764",
+                        "surface-bright": "#f8f9fa",
+                        "tertiary-fixed-dim": "#bcc7dd",
+                        "inverse-surface": "#2e3132",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e1e3e4",
+                        "primary": "#000615",
+                        "primary-container": "#0b1f3a",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "margin": "40px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "max-width": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Manrope"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "label-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Manrope"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soft-depth {
+            box-shadow: 0 20px 25px -5px rgba(11, 31, 58, 0.04), 0 10px 10px -5px rgba(11, 31, 58, 0.02);
+        }
+        .form-input-focus:focus {
+            border-color: #006b5c;
+            box-shadow: 0 0 0 2px rgba(0, 107, 92, 0.1);
+            outline: none;
+        }
+        #mobile-menu {
+            transition: all 0.3s ease-in-out;
+        }
+        #mobile-menu.hidden {
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+<nav class="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center relative">
+<div class="flex items-center gap-2">
+<span class="text-xl font-bold text-[#0B1F3A] font-headline-md">AttendEase</span>
+</div>
+<div class="hidden md:flex items-center space-x-8 font-manrope text-sm font-semibold">
+<a class="text-slate-600 hover:text-teal-600 transition-colors" href="#features">Features</a>
+<a class="text-slate-600 hover:text-teal-600 transition-colors" href="#how-it-works">How it Works</a>
+<a class="text-slate-600 hover:text-teal-600 transition-colors" href="#pricing">Pricing</a>
+</div>
+<div class="flex items-center gap-4">
+<a class="hidden md:block transition-all duration-200 active:scale-95 bg-primary-container text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-opacity-90" href="#early-access">
+                Join Waitlist
+            </a>
+<button class="md:hidden text-primary-container p-2" id="menu-toggle">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+<!-- Mobile Dropdown -->
+<div class="hidden absolute top-16 left-0 w-full bg-white border-b border-slate-200 shadow-lg md:hidden flex flex-col p-6 space-y-4" id="mobile-menu">
+<a class="text-slate-600 font-semibold hover:text-teal-600" href="#features">Features</a>
+<a class="text-slate-600 font-semibold hover:text-teal-600" href="#how-it-works">How it Works</a>
+<a class="text-slate-600 font-semibold hover:text-teal-600" href="#pricing">Pricing</a>
+<a class="bg-primary-container text-white text-center px-5 py-3 rounded-lg font-semibold" href="#early-access">Join Waitlist</a>
+</div>
+</nav>
+</header>
+<main class="pt-16">
+<!-- Hero Section -->
+<section class="relative overflow-hidden bg-white py-24 md:py-32">
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-secondary/10 text-secondary font-label-sm uppercase tracking-wider">
+                    Beta Launch in Progress
+                </div>
+<h1 class="text-headline-xl font-headline-xl text-primary-container leading-tight">
+                    Stop Guessing if Your Field Sales Team is <span class="text-secondary">Actually on the Ground.</span>
+</h1>
+<p class="text-body-lg text-on-surface-variant max-w-lg font-body-lg">
+                    Current attendance logs lack verification. Get undeniable face-scan check-ins, live GPS proof, and instant AI insights for total team visibility.
+                </p>
+<div class="flex flex-col gap-6">
+<div class="flex flex-col sm:row gap-4 pt-4">
+<a class="bg-secondary text-white px-8 py-4 rounded-lg font-headline-md text-body-md text-center hover:bg-opacity-95 transition-all shadow-md active:scale-95" href="#early-access">
+                            Join the Waitlist
+                        </a>
+<button class="border-2 border-primary-container text-primary-container px-8 py-4 rounded-lg font-headline-md text-body-md text-center hover:bg-primary-container hover:text-white transition-all active:scale-95">
+                            Watch Demo
+                        </button>
+</div>
+<div class="space-y-2">
+<p class="text-sm font-medium text-on-surface-variant/70 border-t border-slate-100 pt-4">
+                            500+ Reps Tracked · 98% Check-in Accuracy · 30 min Saved Daily per Manager
+                        </p>
+<p class="text-xs text-on-surface-variant opacity-75 pl-1">No credit card required · Free during early access</p>
+</div>
+</div>
+</div>
+<div class="relative">
+<div class="absolute inset-0 bg-secondary/5 rounded-3xl -rotate-2 scale-105"></div>
+<img alt="AttendEase Mobile Interface" class="relative rounded-3xl shadow-2xl border-8 border-white object-cover w-full aspect-video lg:aspect-square" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAE51nqLcb2sFpLvxH4MqjuazsSBVWDGWTmUZkd7UpBemYIWjhArAP7BABCNpW3DqDpwN4ektAJz3i1vZlfaWKCFbotuYQJj9RnpqBO6jIiN371p92uITbupyUxDPWEkErW3cYZUUG7QJfXy9M5b51xkvQG0S-r2aCbXe1TxA4yceSssADsDj9_90aFvs2QovxJJ9SxvscyBdCCdQ_7pMSo3NcWiiBjDFB86xDFaCdTpeWLUm4uDwbPu5GnDnRrBpI7eTlrWLPxxg"/>
+</div>
+</div>
+</section>
+<!-- Problem Section -->
+<section class="py-20 bg-surface-container-low border-y border-outline-variant">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-12">
+<h2 class="text-headline-lg font-headline-lg text-primary-container">The Field Sales Visibility Gap</h2>
+<p class="text-on-surface-variant mt-4 font-body-md">Traditional management methods are failing modern sales leaders.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="text-center space-y-4">
+<div class="w-16 h-16 bg-red-100 text-error rounded-full flex items-center justify-center mx-auto">
+<span class="material-symbols-outlined text-3xl">wrong_location</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary-container">Unverifiable client visits</h3>
+<p class="text-on-surface-variant font-body-sm">Stop wondering if 'stuck in traffic' actually means your rep is at a movie. Get definitive proof of every client visit.</p>
+</div>
+<div class="text-center space-y-4">
+<div class="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto">
+<span class="material-symbols-outlined text-3xl">history</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary-container">Manual check-in delays</h3>
+<p class="text-on-surface-variant font-body-sm">End the end-of-day paperwork battle. Digital logs are captured instantly, eliminating excuses and 'forgotten' check-ins.</p>
+</div>
+<div class="text-center space-y-4">
+<div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto">
+<span class="material-symbols-outlined text-3xl">forum</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary-container">WhatsApp location chasing</h3>
+<p class="text-on-surface-variant font-body-sm">Stop scrolling through endless chat groups for location pins. Get a single, clean dashboard view of your entire field force.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Social Proof Bar -->
+<section class="bg-surface py-10">
+<div class="max-w-7xl mx-auto px-6 text-center">
+<p class="text-on-surface-variant font-label-md flex items-center justify-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">verified</span>
+                Join 200+ sales managers and business owners across India on the waitlist.
+            </p>
+</div>
+</section>
+<!-- Features Grid (Bento Style) -->
+<section class="py-24 bg-surface" id="features">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-16 space-y-4">
+<h2 class="text-headline-lg font-headline-lg text-primary-container">Built for Precision Sales Operations</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto font-body-md">Advanced technology that replaces manual logs with undeniable biometric proof and real-time visibility.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Feature Card 1 -->
+<div class="bg-white p-8 rounded-xl soft-depth transition-transform hover:-translate-y-1 flex flex-col h-full">
+<div class="w-12 h-12 bg-secondary/10 text-secondary rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined" data-icon="face">face</span>
+</div>
+<h3 class="text-headline-md font-headline-md mb-4 text-primary-container">Face-Scan Check-in</h3>
+<p class="text-on-surface-variant font-body-sm leading-relaxed mb-4">
+                        Prevent buddy punching with secure biometric verification. Our AI confirms identity in milliseconds even in low light conditions across varied field environments.
+                    </p>
+<p class="mt-auto text-on-surface-variant font-body-sm italic">
+                        *How: Rep opens the app, takes a selfie, and they're marked present. Done.*
+                    </p>
+</div>
+<!-- Feature Card 2 -->
+<div class="bg-white p-8 rounded-xl soft-depth transition-transform hover:-translate-y-1 flex flex-col h-full">
+<div class="w-12 h-12 bg-secondary/10 text-secondary rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+</div>
+<h3 class="text-headline-md font-headline-md mb-4 text-primary-container">Live GPS Tracking</h3>
+<p class="text-on-surface-variant font-body-sm leading-relaxed mb-4">
+                        Real-time location visibility while reps are logged in. Create geofences around client sites to ensure check-ins only happen where they are supposed to.
+                    </p>
+<p class="mt-auto text-on-surface-variant font-body-sm italic">
+                        *How: App automatically logs coordinates during work hours for undeniable proof.*
+                    </p>
+</div>
+<!-- Feature Card 3 -->
+<div class="bg-white p-8 rounded-xl soft-depth transition-transform hover:-translate-y-1 flex flex-col h-full">
+<div class="w-12 h-12 bg-secondary/10 text-secondary rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+</div>
+<h3 class="text-headline-md font-headline-md mb-4 text-primary-container">AI Data Chatbot</h3>
+<p class="text-on-surface-variant font-body-sm leading-relaxed mb-4">
+                        Query your data in plain English. Ask things like "Where was Rahul at 3pm on Monday?" or "Which region has the lowest on-time check-in rate this week?"
+                    </p>
+<p class="mt-auto text-on-surface-variant font-body-sm italic">
+                        *How: Just ask 'Where was Rahul at 3pm?' and get an instant map and timestamp.*
+                    </p>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="py-24 bg-surface-container-high" id="how-it-works">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-16">
+<h2 class="text-headline-lg font-headline-lg text-primary-container">How it Works</h2>
+<p class="text-on-surface-variant mt-4 font-body-md">A seamless workflow from the field to the boardroom.</p>
+</div>
+<div class="relative grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Timeline Line (Desktop) -->
+<div class="hidden md:block absolute top-12 left-[15%] right-[15%] h-0.5 bg-secondary/20"></div>
+<!-- Step 1 -->
+<div class="relative flex flex-col items-center text-center space-y-6">
+<div class="relative z-10 w-24 h-24 bg-secondary text-white rounded-full flex items-center justify-center text-headline-md font-bold shadow-lg">1</div>
+<h3 class="text-headline-md font-headline-md text-primary-container">Rep checks in</h3>
+<p class="text-on-surface-variant font-body-sm max-w-xs">Using advanced face scan technology on their mobile device.</p>
+</div>
+<!-- Step 2 -->
+<div class="relative flex flex-col items-center text-center space-y-6">
+<div class="relative z-10 w-24 h-24 bg-secondary text-white rounded-full flex items-center justify-center text-headline-md font-bold shadow-lg">2</div>
+<h3 class="text-headline-md font-headline-md text-primary-container">Live Visibility</h3>
+<p class="text-on-surface-variant font-body-sm max-w-xs">Manager sees real-time locations on the interactive dashboard.</p>
+</div>
+<!-- Step 3 -->
+<div class="relative flex flex-col items-center text-center space-y-6">
+<div class="relative z-10 w-24 h-24 bg-secondary text-white rounded-full flex items-center justify-center text-headline-md font-bold shadow-lg">3</div>
+<h3 class="text-headline-md font-headline-md text-primary-container">Ask the AI</h3>
+<p class="text-on-surface-variant font-body-sm max-w-xs">Query anything about your team's day using natural language.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonial Section -->
+<section class="py-24 bg-primary-container/5">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-16">
+<div class="inline-flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-secondary text-4xl" style="font-variation-settings: 'FILL' 1;">format_quote</span>
+</div>
+<h2 class="text-headline-lg font-headline-lg text-primary-container">Trusted by Sales Leaders</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+<p class="text-on-surface-variant font-body-md mb-8 italic flex-grow">
+                        "I used to spend 30 minutes every morning chasing location updates on WhatsApp. This would've saved me hours."
+                    </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-slate-200"></div>
+<div>
+<p class="font-bold text-primary-container">Ankit Mehta</p>
+<p class="text-on-surface-variant text-xs">Regional Sales Head, Delhi</p>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+<p class="text-on-surface-variant font-body-md mb-8 italic flex-grow">
+                        "No more fake check-ins. The biometric verification changed how we manage our 50-person team in Mumbai."
+                    </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-slate-200"></div>
+<div>
+<p class="font-bold text-primary-container">Sunita Rao</p>
+<p class="text-on-surface-variant text-xs">Operations Director</p>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+<p class="text-on-surface-variant font-body-md mb-8 italic flex-grow">
+                        "The AI chatbot is a game changer. I just ask 'who missed their morning beat?' and I have the list in seconds."
+                    </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-slate-200"></div>
+<div>
+<p class="font-bold text-primary-container">Rajesh Kumar</p>
+<p class="text-on-surface-variant text-xs">Sales Lead, Bangalore</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Early Access Form -->
+<section class="py-24 bg-white" id="early-access">
+<div class="max-w-4xl mx-auto px-6">
+<div class="bg-primary-container rounded-3xl p-8 md:p-16 text-white relative overflow-hidden">
+<!-- Subtle background decoration -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-secondary/10 rounded-full -mr-32 -mt-32"></div>
+<div class="relative z-10">
+<div class="text-center mb-12">
+<div class="inline-flex items-center px-4 py-1.5 rounded-full bg-secondary text-white font-label-sm mb-6 shadow-sm">
+                            🔥 Limited Early Access Spots
+                        </div>
+<h2 class="text-headline-xl font-headline-xl mb-4">Get Early Access</h2>
+<p class="text-primary-fixed-dim font-body-md opacity-90">Secure your spot in our private beta and transform your field sales productivity.</p>
+</div>
+<form class="space-y-6 max-w-xl mx-auto" id="waitlist-form">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label-sm text-surface-container-low">Full Name</label>
+<input class="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 form-input-focus" placeholder="Arjun Sharma" required="" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-sm text-surface-container-low">Work Email</label>
+<input class="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 form-input-focus" id="input-email" placeholder="arjun@company.com" required="" type="email"/>
+<span class="hidden text-xs text-red-300 mt-1" id="error-email">Please enter a valid email address.</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label-sm text-surface-container-low">Phone Number</label>
+<input class="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 form-input-focus" id="input-phone" placeholder="+91 98765 43210" required="" type="tel"/>
+<span class="hidden text-xs text-red-300 mt-1" id="error-phone">Enter a valid phone number (6–15 digits, optional + prefix).</span>
+</div>
+<div class="space-y-2">
+<label class="font-label-sm text-surface-container-low">Field Sales Reps Managed</label>
+<select class="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white form-input-focus [&amp;&gt;option]:text-primary-container" required="">
+<option disabled="" selected="" value="">Select size</option>
+<option value="1-10">1-10</option>
+<option value="11-50">11-50</option>
+<option value="51-200">51-200</option>
+<option value="200+">200+</option>
+</select>
+</div>
+</div>
+<div class="space-y-6">
+<button class="w-full bg-secondary text-white py-4 rounded-lg font-headline-md text-body-md hover:bg-secondary-fixed transition-colors shadow-lg active:scale-95 flex items-center justify-center gap-2" type="submit">
+                                Reserve My Spot →
+                            </button>
+<div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-xs text-primary-fixed-dim/70">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">lock</span> No credit card needed</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">mail</span> No spam ever</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">rocket_launch</span> Free during beta</span>
+</div>
+</div>
+</form>
+<!-- Success Message -->
+<div class="hidden text-center p-8 bg-white/10 rounded-2xl mt-8" id="success-message">
+<span class="material-symbols-outlined text-4xl text-secondary-fixed mb-4" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<p class="text-xl font-headline-md">You're on the list! We'll be in touch soon.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#0B1F3A] py-16 border-t border-slate-800">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row justify-center items-center gap-12 text-center">
+<div class="space-y-4">
+<span class="text-2xl font-bold text-white font-headline-md">AttendEase</span>
+<p class="text-slate-400 font-body-sm max-w-xs">
+                    The ultimate biometric platform for field sales operations across modern Indian enterprises.
+                </p>
+</div>
+<div class="flex flex-wrap gap-x-12 gap-y-6">
+
+
+</div>
+</div>
+<div class="mt-16 pt-8 border-t border-slate-800 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="space-y-2">
+<p class="text-slate-500 text-xs font-manrope">We respect your privacy. No spam, ever.</p>
+<p class="text-slate-500 text-xs font-manrope">
+                    © 2026 AttendEase. All rights reserved. Built for the modern sales force.
+                </p>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
+<span class="text-slate-500 text-xs font-label-sm">All Systems Operational</span>
+</div>
+</div>
+</div>
+</footer>
+<script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close menu when clicking links
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+    });
+
+   
+
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyC_aD5HEZJ2wbSLsx2WuV6SlPzYZT45sux6GWdzVX92P0AY-iBhkualzpzpUoyi6gt/exec';
+
+    const form    = document.getElementById('waitlist-form');
+    const success = document.getElementById('success-message');
+
+    // ── Validation helpers ────────────────────────────────────────────
+    const emailInput = document.getElementById('input-email');
+    const phoneInput = document.getElementById('input-phone');
+    const emailError = document.getElementById('error-email');
+    const phoneError = document.getElementById('error-phone');
+
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    const PHONE_RE = /^\+?[\d][\d\s\-]{4,13}[\d]$/;
+
+    function showError(inputEl, errorEl, message) {
+        inputEl.classList.add('border-red-400');
+        inputEl.classList.remove('border-white/20');
+        errorEl.textContent = message;
+        errorEl.classList.remove('hidden');
+    }
+
+    function clearError(inputEl, errorEl) {
+        inputEl.classList.remove('border-red-400');
+        inputEl.classList.add('border-white/20');
+        errorEl.classList.add('hidden');
+    }
+
+    /** Returns true when the field value passes its rule */
+    function validateEmail() {
+        const val = emailInput.value.trim();
+        if (!val) {
+            showError(emailInput, emailError, 'Work email is required.');
+            return false;
+        }
+        if (!EMAIL_RE.test(val)) {
+            showError(emailInput, emailError, 'Please enter a valid email address (e.g. arjun@company.com).');
+            return false;
+        }
+        clearError(emailInput, emailError);
+        return true;
+    }
+
+    function validatePhone() {
+        const val = phoneInput.value.trim();
+        if (!val) {
+            showError(phoneInput, phoneError, 'Phone number is required.');
+            return false;
+        }
+        // Strip spaces and dashes for digit-count check
+        const digits = val.replace(/[\s\-]/g, '');
+        if (!PHONE_RE.test(val) || digits.replace('+', '').length < 6) {
+            showError(phoneInput, phoneError, 'Enter a valid phone number (6–15 digits, optional + country code).');
+            return false;
+        }
+        clearError(phoneInput, phoneError);
+        return true;
+    }
+
+    // Clear errors as soon as the user fixes the field (on blur)
+    emailInput.addEventListener('blur', validateEmail);
+    phoneInput.addEventListener('blur', validatePhone);
+
+    // Also clear inline while typing after first error shown
+    emailInput.addEventListener('input', () => {
+        if (!emailError.classList.contains('hidden')) validateEmail();
+    });
+    phoneInput.addEventListener('input', () => {
+        if (!phoneError.classList.contains('hidden')) validatePhone();
+    });
+    // ─────────────────────────────────────────────────────────────────
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Run both validations; bail if either fails
+        const emailOk = validateEmail();
+        const phoneOk = validatePhone();
+        if (!emailOk || !phoneOk) return;
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.textContent = 'Submitting...';
+        submitBtn.disabled = true;
+
+        const data = {
+            name:      form.querySelector('input[type="text"]').value,
+            email:     emailInput.value.trim(),
+            phone:     phoneInput.value.trim(),
+            teamSize:  form.querySelector('select').value,
+            timestamp: new Date().toISOString()
+        };
+
+        try {
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+        } catch (err) {
+            console.error('Submission error:', err);
+        }
+
+        form.classList.add('hidden');
+        success.classList.remove('hidden');
+    });
+</script>
+</body></html>
